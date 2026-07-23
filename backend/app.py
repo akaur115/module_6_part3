@@ -14,15 +14,6 @@ app.config["MONGO_URI"] = os.environ.get('MONGO_URI', 'mongodb://mongo:27017/ban
 mongo = PyMongo(app)
 
 
-@app.route('/api/health')
-def health():
-    try:
-        # ping mongo
-        mongo.cx.admin.command('ping')
-        return jsonify(status='ok'), 200
-    except Exception as e:
-        return jsonify(status='degraded', error=str(e)), 500
-
 @app.route('/')
 def home():
     if 'user_id' in session:
