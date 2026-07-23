@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read       # allow committing to repos (for GitOps push)
+  contents: write     # allow committing to repos (for GitOps push)
   packages: write        # allow pushing to GHCR
 
 concurrency:
