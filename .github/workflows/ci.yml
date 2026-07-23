@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write        # allow committing to repos (for GitOps push)
+  contents: read       # allow committing to repos (for GitOps push)
   packages: write        # allow pushing to GHCR
 
 concurrency:
@@ -44,12 +44,11 @@ jobs:
           fi
 
       - name: Log in to GHCR
-        if: steps.check.outputs.build == 'true'
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.CR_PAT }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Docker Buildx
         if: steps.check.outputs.build == 'true'
